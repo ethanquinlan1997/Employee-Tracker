@@ -4,16 +4,20 @@
 
 1. [Description](#description)
 2. [Resources](#resources)
-3. [Installations](#installations)
-4. [Usage](#usage)
-5. [Contributions](#contributions)
-6. [License](#license)
+3. [Recording](#recording)
+4. [Installations](#installations)
+5. [Usage](#usage)
+6. [Contributions](#contributions)
+7. [License](#license)
 
 ## Description <a name="description"></a>
 A CLI application that creates a table to track employees. You have access to view employees title, salary and manager. You can update employees role as well as add a new employee to the list.
 
 ## Resources <a name="resources"></a>
 -GitHub account: https://github.com/ethanquinlan1997
+
+## Recording <a name="recording"></a>
+-https://drive.google.com/file/d/1_e9GvE0bH4FdrW9DTqdrY7iSkihBRlmv/view
 
 
 ## Installation <a name="installation"></a>
