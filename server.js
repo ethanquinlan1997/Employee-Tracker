@@ -1,6 +1,6 @@
 // imports
 const inquirer = require('inquirer');
-const mysql = require("mysql2");
+// const mysql = require("mysql2");
 require("console.table");
 const db = require("./db/dbConnection");
 
@@ -10,7 +10,7 @@ function employeeList() {
    inquirer
    .prompt({
       type: 'list',
-      name: 'employee list',
+      name: 'answer',
       message: 'What would you like to do?',
       choices: [
         'View All Employees',
@@ -22,45 +22,46 @@ function employeeList() {
         'Add Department',
         'View All Employees',
         'Quit',
-      ]
+      ],
     })
     .then(function(userChoice){
-      if (userChoice.title==="View All Employees"){
+      if (userChoice.answer==="View All Employees"){
           viewAllEmployees()
       }
-      if (userChoice.title==="View All Roles"){
+      if (userChoice.answer==="View All Roles"){
           viewAllRoles()
       }
-      if (userChoice.title==="View All Departments"){
+      if (userChoice.answer==="View All Departments"){
          viewAllDepartments()
       }
-      if (userChoice.title==="Add department"){
+      if (userChoice.answer==="Add Department"){
           addDepartment()
       }
-      if (userChoice.title==="Add role"){
+      if (userChoice.answer==="Add Role"){
           addRole()
       }
-      if (userChoice.title==="Add employee"){
+      if (userChoice.answer==="Add Employees"){
           addEmployee()
       }
-      if (userChoice.title==="Update Employee Role"){
+      if (userChoice.answer==="Update Employee Role"){
           updateEpmloyeeRole()
       }
-      if (userChoice.title==="Quit"){
+      if (userChoice.answer==="Quit"){
           console.log("Good Bye!")
           return;
       }
   });
-}
+};
 
 function viewAllEmployees(){
-  const sql = `SELECT * FROM employee`
+    // console.log("working");
+  const sql = `SELECT * FROM employees`
 
   db.query(sql, function(err, results){
       console.table(results)
       employeeList()
   })
-}
+};
 
 function addEmployee() {
   console.log("Add an Employee")
@@ -88,22 +89,22 @@ function addEmployee() {
 
   ])
   .then(function(userChoice){
-      const sql= `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`
+      const sql= `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`
       db.query(sql, [userChoice.first_name, userChoice.last_name, userChoice.role_id, userChoice.manager_id], function(err, results){
           if (err) {
               console.log(err)
           }
-          console.log("Employee added to database.")
+          console.table(results)
           employeeList()
       })
   })
-}
+};
 function updateEpmloyeeRole(){
   console.log("Update Employee Role")
   return inquirer.prompt([
       {
           type: "input",
-          name: "employee",
+          name: "employees",
           message: "Enter Employee ID."
       },
       {
@@ -113,15 +114,15 @@ function updateEpmloyeeRole(){
       }
   ])
   .then(function(userChoice){
-      const sql= `UPDATE employee SET role_id=? WHERE id=?`
+      const sql= `UPDATE employees SET role_id=? WHERE id=?`
       db.query(sql,[userChoice.role_id, userChoice.id], function(err, results){
-          console.log("Role updated.")
+          console.table(results)
           employeeList()
       })
   })
-}
+};
 function viewAllRoles() {
-  const sql = `SELECT * FROM role`
+  const sql = `SELECT * FROM roles`
   console.log("View All Roles")
   db.query(sql, function(err, results){
       if (err) {
@@ -130,10 +131,10 @@ function viewAllRoles() {
       console.table(results)
       employeeList()
   })
-}
+};
 
 function addRole(){
-  console.log("Add Role")
+  console.log("Add Roles")
   inquirer.prompt([
       {
           type: "input",
@@ -152,18 +153,18 @@ function addRole(){
       },
   ])
   .then(function(userChoice) {
-      const sql = `INSERT INTO role (title, salary, department_id) VALUES(?,?,?)`
+      const sql = `INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)`
 
-      db.query(sql, [userChoice.title,userChoice.salary,userChoice.department_id], function(err, results){
+      db.query(sql, [userChoice.answer,userChoice.salary,userChoice.department_id], function(err, results){
           if (err) {
               console.log(err)
           }
-          console.log("Role added to DB.")
+          console.table(results)
           employeeList()
       })
   })
 
-}
+};
 
 function addDepartment() {
   console.log("Add a Department")
@@ -175,32 +176,32 @@ function addDepartment() {
       }
   ])
   .then(function(userChoice){
-      const sql = `INSERT INTO department (name) VALUES(?)`
+      const sql = `INSERT INTO departments (name) VALUES(?)`
 
-      db.query(sql,[userChoice.Dept_name], function(err, results) {
-          console.log("Department added to DB")
+      db.query(sql,[userChoice.departments_name], function(err, results) {
+          console.table(results)
           employeeList()
       })
   })
-}
+};
 
 function viewAllDepartments(){
-  const sql = `SELECT * FROM department`
+  const sql = `SELECT * FROM departments`
 
   db.query(sql, function(err, results){
       console.table(results)
       employeeList()
   })
   
-}
+};
 
 function viewAllEmployees(){
-  const sql = `SELECT * FROM employee`
+  const sql = `SELECT * FROM employees`
 
   db.query(sql, function(err, results){
       console.table(results)
       employeeList()
   })
-}
+};
 
 employeeList();
