@@ -11,7 +11,7 @@
 7. [License](#license)
 
 ## Description <a name="description"></a>
-A CLI application that creates a table to track employees. You have access to view employees title, salary and manager. You can update employees role as well as add a new employee to the list.
+A CLI application that creates a table to track employees. You have access to view employees title, salary and managers. You can update employees role as well as add a new employee to the list.
 
 ## Resources <a name="resources"></a>
 -GitHub account: https://github.com/ethanquinlan1997
